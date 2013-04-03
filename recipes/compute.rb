@@ -35,6 +35,8 @@ if platform?(%w(ubuntu))
     nova_compute_packages << "nova-compute-kvm"
   elsif node["nova"]["libvirt"]["virt_type"] == "qemu"
     nova_compute_packages << "nova-compute-qemu"
+  elsif node["nova"]["compute"]["connection_type"] == "xenapi"
+    nova_compute_packages << "python-xenapi"
   end
 end
 
@@ -92,12 +94,12 @@ monitoring_metric "nova-compute-proc" do
   alarms(:failure_min => 2.0)
 end
 
-include_recipe "nova::libvirt"
+include_recipe "nova::libvirt" unless node["nova"]["compute"]["connection_type"] == "xenapi"
 
 execute "remove vhost-net module" do
     command "rmmod vhost_net"
     notifies :restart, "service[nova-compute]"
-    notifies :restart, "service[libvirt-bin]"
+    notifies :restart, "service[libvirt-bin]" unless node["nova"]["compute"]["connection_type"] == "xenapi"
     only_if "lsmod | grep vhost_net"
 end
 

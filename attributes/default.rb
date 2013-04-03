@@ -56,6 +56,14 @@ default["nova"]["syslog"]["config_facility"] = "local1"                     # no
 
 # can this be wedged into the "api" endpoint?                               # node_attribute
 default["nova"]["compute"]["region"] = "RegionOne"                          # node_attribute
+default["nova"]["compute"]["connection_type"] = "libvirt"                   # node_attribute
+default["nova"]["compute"]["xenapi"]["connection_url"] = "http://xenapi.example.com/PLEASE_CHANGE_ATTRIBUTE/nova.compute.xenapi.connection_url"
+default["nova"]["compute"]["xenapi"]["connection_username"] = "PLEASE_CHANGE_ATTRIBUTE:nova.compute.xenapi.connection_username"
+default["nova"]["compute"]["xenapi"]["connection_password"] = "PLEASE_CHANGE_ATTRIBUTE:nova.compute.xenapi.connection_password"
+default["nova"]["compute"]["xenapi"]["agent_path"] = "/usr/sbin/xe-update-networking"
+default["nova"]["compute"]["xenapi"]["connection_concurrent"] = 5
+default["nova"]["compute"]["xenapi"]["log_instance_actions"] = false
+default["nova"]["compute"]["xenapi"]["login_timeout"] = 10 # seconds
 
 default["nova"]["scheduler"]["scheduler_driver"] = "nova.scheduler.filter_scheduler.FilterScheduler"           # cluster_attribute
 default["nova"]["scheduler"]["least_cost_functions"] = "nova.scheduler.least_cost.compute_fill_first_cost_fn"   # cluster_attribute
@@ -258,7 +266,7 @@ when "ubuntu"
     "nova_cert_packages" => ["nova-cert"],
     "nova_cert_service" => "nova-cert",
     "mysql_service" => "mysql",
-    "common_packages" => ["nova-common", "python-nova", "python-novaclient"],
+    "common_packages" => ["nova-common", "python-nova", "python-novaclient", "python-mysqldb"],
     "iscsi_helper" => "tgtadm",
     "iscsi_service" => "tgt",
     "package_overrides" => "-o Dpkg::Options::='--force-confold' -o Dpkg::Options::='--force-confdef'",
