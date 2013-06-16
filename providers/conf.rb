@@ -35,6 +35,7 @@ action :create do
     network_options["network_manager"] = node[net_provider]["network"]["network_manager"]
     network_options["multi_host"] = node[net_provider]["network"]["multi_host"]
     network_options["public_interface"] = node[net_provider]["network"]["public_interface"]
+    network_options["flat_network_bridge"] = node[net_provider]["network"]["flat_network_bridge"]
     network_options["fixed_range"] = node[net_provider]["networks"][0]["ipv4_cidr"]
     network_options["dmz_cidr"] = node[net_provider]["network"]["dmz_cidr"]
     network_options["force_dhcp_release"] = node[net_provider]["network"]["force_dhcp_release"]

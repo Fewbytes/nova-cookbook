@@ -63,6 +63,7 @@ libvirt_type=<%= @virt_type %>
 libvirt_inject_key=<%= @libvirt_inject_key %>
 <% end -%>
 <% if node["nova"]["compute"]["connection_type"] == "xenapi" -%>
+agent_version_timeout=1
 <% node["nova"]["compute"]["xenapi"].each do |k, v| -%>
 xenapi_<%=k%>=<%= v %>
 <% end -%>
@@ -92,7 +93,7 @@ novncproxy_host=<%= @novncproxy_bind_host %>
 novncproxy_port=<%= @novncproxy_bind_port %>
 
 vncserver_listen=<%= @vncserver_listen %>
-vncserver_proxyclient_address=<%= node["nova"]["compute"]["vncserver_proxyclient_address"] or @vncserver_proxyclient_address %>
+vncserver_proxyclient_address=<%= @vncserver_proxyclient_address %>
 
 ##### MISC #####
 # force backing images to raw format
